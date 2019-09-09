@@ -4,6 +4,9 @@ connection = Bunny.new(automatically_recover: false)
 connection.start
 channel = connection.create_channel
 queue = channel.queue('hello')
-channel.default_exchange.publish('Hello World!', routing_key: queue.name)
-puts " [Barakat] Sent 'Hello World!'"
+message = "Message Number"
+for i in 1..500 do
+  channel.default_exchange.publish("#{message} #{i}", routing_key: queue.name)
+  puts " [Barakat] Sent 'Hello World!'"
+end
 connection.close
